@@ -39,6 +39,13 @@ public class ResttemplateApplication {
             SampleServerShawnMendesResponse sampleServerShawnMendesResponse = mapJsonToSampleShanMendesResponse(getJsonSampleShawnMendesServer);
             System.out.println(sampleServerShawnMendesResponse);
         }
+        sampleShawnMendesServerProxy.makeDeleteRequest("0");
+        String getJsonSampleShawnMendesServer2 = sampleShawnMendesServerProxy.makeGetRequest();
+        if(getJsonSampleShawnMendesServer != null) {
+            SampleServerShawnMendesResponse sampleServerShawnMendesResponse = mapJsonToSampleShanMendesResponse(getJsonSampleShawnMendesServer2);
+            System.out.println(sampleServerShawnMendesResponse);
+        }
+
     }
 
     private ShawnMendesResponse mapJsonToShawnMendesResponse(String json) throws JsonProcessingException {

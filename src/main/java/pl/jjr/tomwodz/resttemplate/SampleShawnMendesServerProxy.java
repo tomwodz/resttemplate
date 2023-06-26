@@ -71,7 +71,29 @@ public class SampleShawnMendesServerProxy {
             System.out.println(exception.getMessage());
         }
         return null;
+    }
 
-
+    public String makeDeleteRequest(String id) {
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .newInstance()
+                .scheme("http")
+                .host(url)
+                .port(port)
+                .path("/shawn/songs/")
+                 .path(id);
+        //queryParam("iD",id);
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    builder.build().toUri(),
+                    HttpMethod.DELETE,
+                    null,
+                    String.class);
+            return response.getBody();
+        } catch (RestClientResponseException exception) {
+            System.out.println(exception.getStatusText() + " " + exception.getStatusCode().value());
+        } catch (RestClientException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return null;
     }
 }
