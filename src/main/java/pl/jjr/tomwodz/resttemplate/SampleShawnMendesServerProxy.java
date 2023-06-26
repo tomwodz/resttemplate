@@ -1,6 +1,5 @@
 package pl.jjr.tomwodz.resttemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -24,7 +23,8 @@ public class SampleShawnMendesServerProxy {
 
     @Value("${sample-shawn-mendes-server.service.port}")
     int port;
-    public String makeRequest() {
+
+    public String makePostRequest() {
         UriComponentsBuilder builder = UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
@@ -32,12 +32,14 @@ public class SampleShawnMendesServerProxy {
                 .port(port)
                 .path("/shawn/songs");
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("requestId", "test" );
-        HttpEntity<HttpHeaders> httpEntity = new HttpEntity<>(httpHeaders);
+        httpHeaders.add("requestId", "test");
+        SampleShawnMendesRequest requestBody = new SampleShawnMendesRequest("test test test");
+        HttpEntity<SampleShawnMendesRequest> httpEntity = new HttpEntity<>(requestBody, httpHeaders);
+
         try {
             ResponseEntity<String> response = restTemplate.exchange(
                     builder.build().toUri(),
-                    HttpMethod.GET,
+                    HttpMethod.POST,
                     httpEntity,
                     String.class);
             return response.getBody();
@@ -49,5 +51,27 @@ public class SampleShawnMendesServerProxy {
         return null;
     }
 
+    public String makeGetRequest() {
+        UriComponentsBuilder builder = UriComponentsBuilder
+                .newInstance()
+                .scheme("http")
+                .host(url)
+                .port(port)
+                .path("/shawn/songs");
+        try {
+            ResponseEntity<String> response = restTemplate.exchange(
+                    builder.build().toUri(),
+                    HttpMethod.GET,
+                    null,
+                    String.class);
+            return response.getBody();
+        } catch (RestClientResponseException exception) {
+            System.out.println(exception.getStatusText() + " " + exception.getStatusCode().value());
+        } catch (RestClientException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return null;
 
+
+    }
 }

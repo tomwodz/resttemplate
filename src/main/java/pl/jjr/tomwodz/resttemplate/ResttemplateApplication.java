@@ -29,9 +29,14 @@ public class ResttemplateApplication {
 //            System.out.println(shawnMendesResponse);
 //        }
 
-        String jsonSampleShawnMendesServer = sampleShawnMendesServerProxy.makeRequest();
-        if(jsonSampleShawnMendesServer != null) {
-            SampleServerShawnMendesResponse sampleServerShawnMendesResponse = mapJsonToSampleShanMendesResponse(jsonSampleShawnMendesServer);
+        String postJsonSampleShawnMendesServer = sampleShawnMendesServerProxy.makePostRequest();
+        if(postJsonSampleShawnMendesServer != null) {
+            SampleServerShawnMendesResponse sampleServerShawnMendesResponse = mapJsonToSampleShanMendesResponse(postJsonSampleShawnMendesServer);
+            System.out.println(sampleServerShawnMendesResponse);
+        }
+        String getJsonSampleShawnMendesServer = sampleShawnMendesServerProxy.makeGetRequest();
+        if(getJsonSampleShawnMendesServer != null) {
+            SampleServerShawnMendesResponse sampleServerShawnMendesResponse = mapJsonToSampleShanMendesResponse(getJsonSampleShawnMendesServer);
             System.out.println(sampleServerShawnMendesResponse);
         }
     }
