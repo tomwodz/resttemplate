@@ -1,4 +1,4 @@
-package pl.jjr.tomwodz.resttemplate;
+package pl.jjr.tomwodz.resttemplate.config.proxy;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

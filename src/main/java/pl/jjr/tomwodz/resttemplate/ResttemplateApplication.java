@@ -1,21 +1,22 @@
 package pl.jjr.tomwodz.resttemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
+import pl.jjr.tomwodz.resttemplate.itunes.service.ItunesService;
+import pl.jjr.tomwodz.resttemplate.sampleshawnmendes.service.ShawnMendesService;
 
 @SpringBootApplication
 public class ResttemplateApplication {
 
     @Autowired
-    ItunesProxy shawnMendesClient;
+    ItunesService itunesService;
 
     @Autowired
-    SampleShawnMendesServerProxy sampleShawnMendesServerProxy;
+    ShawnMendesService shawnMendesService;
 
     public static void main(String[] args) {
         SpringApplication.run(ResttemplateApplication.class, args);
@@ -23,40 +24,8 @@ public class ResttemplateApplication {
 
     @EventListener(ApplicationStartedEvent.class)
     public void run() throws JsonProcessingException {
-//        String json = shawnMendesClient.makeRequest("shawnmendes", 4);
-//        if(json != null){
-//            ShawnMendesResponse shawnMendesResponse = mapJsonToShawnMendesResponse(json);
-//            System.out.println(shawnMendesResponse);
-//        }
-
-        String postJsonSampleShawnMendesServer = sampleShawnMendesServerProxy.makePostRequest();
-        if(postJsonSampleShawnMendesServer != null) {
-            SampleServerShawnMendesResponse sampleServerShawnMendesResponse = mapJsonToSampleShanMendesResponse(postJsonSampleShawnMendesServer);
-            System.out.println(sampleServerShawnMendesResponse);
-        }
-        String getJsonSampleShawnMendesServer = sampleShawnMendesServerProxy.makeGetRequest();
-        if(getJsonSampleShawnMendesServer != null) {
-            SampleServerShawnMendesResponse sampleServerShawnMendesResponse = mapJsonToSampleShanMendesResponse(getJsonSampleShawnMendesServer);
-            System.out.println(sampleServerShawnMendesResponse);
-        }
-        sampleShawnMendesServerProxy.makeDeleteRequest("0");
-        String getJsonSampleShawnMendesServer2 = sampleShawnMendesServerProxy.makeGetRequest();
-        if(getJsonSampleShawnMendesServer != null) {
-            SampleServerShawnMendesResponse sampleServerShawnMendesResponse = mapJsonToSampleShanMendesResponse(getJsonSampleShawnMendesServer2);
-            System.out.println(sampleServerShawnMendesResponse);
-        }
-
+        itunesService.fetchShawnMendesSongs();
+        shawnMendesService.testClient();
     }
-
-    private ShawnMendesResponse mapJsonToShawnMendesResponse(String json) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, ShawnMendesResponse.class);
-    }
-
-    private SampleServerShawnMendesResponse mapJsonToSampleShanMendesResponse(String json) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json, SampleServerShawnMendesResponse.class);
-    }
-
 
 }

@@ -1,4 +1,4 @@
-package pl.jjr.tomwodz.resttemplate;
+package pl.jjr.tomwodz.resttemplate.sampleshawnmendes.proxy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

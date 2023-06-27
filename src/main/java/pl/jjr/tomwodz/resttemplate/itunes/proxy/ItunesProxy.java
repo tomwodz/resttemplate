@@ -1,4 +1,4 @@
-package pl.jjr.tomwodz.resttemplate;
+package pl.jjr.tomwodz.resttemplate.itunes.proxy;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
